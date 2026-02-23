@@ -1,5 +1,5 @@
 {
-    "name": "@apyx/sdk",
+    "name": "@apyxfun/sdk",
     "version": "0.1.1",
     "description": "TypeScript SDK for interacting with the Apyx on-chain program",
     "main": "dist/cjs/index.js",
@@ -45,7 +45,7 @@
     "devDependencies": {
         "@types/bn.js": "^5.1.6",
         "@types/node": "^22.13.1",
-        "typescript": "^5.7.3"
+        "typescript": "^5.9.3"
     },
     "peerDependencies": {
         "@coral-xyz/anchor": "^0.30.0",

@@ -1,17 +1,17 @@
-# @apyx/sdk
+# @apyxfun/sdk
 
 TypeScript SDK for interacting with the Apyx on-chain program.
 
 ## Installation
 
 ```bash
-npm install @apyx/sdk
+npm install @apyxfun/sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { ApyxClient, PROGRAM_ID } from '@apyx/sdk';
+import { ApyxClient, PROGRAM_ID } from '@apyxfun/sdk';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
 import { AnchorProvider, Wallet } from '@coral-xyz/anchor';
 
@@ -53,7 +53,7 @@ import {
   calculateBuyQuote,
   calculateSellQuote,
   getMarketCap,
-} from '@apyx/sdk';
+} from '@apyxfun/sdk';
 ```
 
 ### Events
