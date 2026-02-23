@@ -1,6 +1,6 @@
 {
     "name": "@apyx/sdk",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "TypeScript SDK for interacting with the Apyx on-chain program",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
