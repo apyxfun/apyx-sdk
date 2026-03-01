@@ -77,6 +77,8 @@ export interface DuelResolvedEvent {
     winnerMint: PublicKey;
     loserMint: PublicKey;
     targetMcap: number;
+    tokenAMcapAtEnd: number;
+    tokenBMcapAtEnd: number;
     solUsed: number;
     winnerTokensBought: number;
     protocolFee: number;

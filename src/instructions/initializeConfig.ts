@@ -10,6 +10,8 @@ export interface InitializeConfigParams {
     creatorFeeBps: number;
     protocolFeeVault: PublicKey;
     targetMcapGrowthBps: number;
+    /** Max allowed gap between mcap buckets in bps (e.g. 11000 = 10% gap per bucket). Default 11000. */
+    mcapBucketGapBps?: number;
     graduateTokens: boolean;
     graduationFeeLamports: BN;
     initialVirtualSolReserves: BN;
@@ -43,6 +45,7 @@ export async function initializeConfig(
             params.creatorFeeBps,
             params.protocolFeeVault,
             params.targetMcapGrowthBps,
+            params.mcapBucketGapBps ?? 11000,
             params.graduateTokens,
             params.graduationFeeLamports,
             params.initialVirtualSolReserves,

@@ -3,7 +3,7 @@ import { PublicKey } from "@solana/web3.js";
 /**
  * Apyx Program ID (Devnet/Mainnet)
  */
-export const PROGRAM_ID = new PublicKey("APYzSaPqLXC9HJeMLwbMpgbFN5VJD8iLyZjSAZdvcZGM");
+export const PROGRAM_ID = new PublicKey("APXHXop7g5xqYc72LuchFFcnGQaPMpZCfmjSMH6YxC27");
 
 /**
  * Token-2022 Program ID

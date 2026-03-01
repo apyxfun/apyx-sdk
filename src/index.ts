@@ -45,7 +45,7 @@ export {
 // IDL
 export { IDL, Apyx } from './idl';
 
-// PumpSwap SDK re-exports (used by services through @apyx/sdk)
+// PumpSwap SDK re-exports (used by services through @apyxfun/sdk)
 export {
     OnlinePumpAmmSdk,
     PumpAmmSdk,

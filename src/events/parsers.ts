@@ -92,12 +92,16 @@ export function toDuelResolvedEvent(event: any): DuelResolvedEvent {
     const winnerTokensBought = event.winnerTokensBought ?? event.winner_tokens_bought;
     const protocolFee = event.protocolFee ?? event.protocol_fee;
     const timestamp = event.timestamp;
+    const tokenAMcapAtEnd = event.tokenAMcapAtEnd ?? event.token_a_mcap_at_end;
+    const tokenBMcapAtEnd = event.tokenBMcapAtEnd ?? event.token_b_mcap_at_end;
     const n = (v: any) => (v?.toNumber ? v.toNumber() : Number(v ?? 0));
     return {
         duel: new PublicKey(event.duel),
         winnerMint: new PublicKey(winnerMint),
         loserMint: new PublicKey(loserMint),
         targetMcap: n(targetMcap),
+        tokenAMcapAtEnd: n(tokenAMcapAtEnd),
+        tokenBMcapAtEnd: n(tokenBMcapAtEnd),
         solUsed: n(solUsed),
         winnerTokensBought: n(winnerTokensBought),
         protocolFee: n(protocolFee),

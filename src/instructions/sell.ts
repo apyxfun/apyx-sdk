@@ -71,7 +71,7 @@ export async function sell(
         tokenDelta: new BN(tokenAmount),
     });
 
-    const bucket = mcapToBucket(BigInt(postTradeMcap.toString())) ?? 0;
+    const bucket = mcapToBucket(BigInt(postTradeMcap.toString()), configAccount as any) ?? 0;
 
     // Calculate window and duel PDA using config values
     const slot = await connection.getSlot(commitment);

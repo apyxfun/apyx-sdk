@@ -94,6 +94,8 @@ export interface ConfigData {
     creatorFeeBps: number;
     /** Target mcap growth in bps (e.g. 11000 = 110%) */
     targetMcapGrowthBps: number;
+    /** Max allowed gap between mcap buckets in bps (e.g. 11000 = 10% gap per bucket). Used for mcap_to_bucket formula. */
+    mcapBucketGapBps?: number;
     graduateTokens: boolean;
     graduationFeeLamports: BN;
     initialVirtualSolReserves: BN;
@@ -128,6 +130,10 @@ export interface DuelData {
     tokenAMcapAtStart?: BN;
     /** Token B mcap (lamports) at duel join; 0 for legacy accounts */
     tokenBMcapAtStart?: BN;
+    /** Token A mcap (lamports) at duel resolution; 0 until resolved */
+    tokenAMcapAtEnd?: BN;
+    /** Token B mcap (lamports) at duel resolution; 0 until resolved */
+    tokenBMcapAtEnd?: BN;
 }
 
 /** User position (per user per bonding curve) for mercy claim and auto-claim */

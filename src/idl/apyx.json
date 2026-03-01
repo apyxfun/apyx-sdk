@@ -1,5 +1,5 @@
 {
-  "address": "APYzSaPqLXC9HJeMLwbMpgbFN5VJD8iLyZjSAZdvcZGM",
+  "address": "APXHXop7g5xqYc72LuchFFcnGQaPMpZCfmjSMH6YxC27",
   "metadata": {
     "name": "apyx",
     "version": "0.1.0",
@@ -689,6 +689,10 @@
           "type": "u16"
         },
         {
+          "name": "mcap_bucket_gap_bps",
+          "type": "u16"
+        },
+        {
           "name": "graduate_tokens",
           "type": "bool"
         },
@@ -807,6 +811,10 @@
         },
         {
           "name": "target_mcap_growth_bps",
+          "type": "u16"
+        },
+        {
+          "name": "mcap_bucket_gap_bps",
           "type": "u16"
         },
         {
@@ -2027,6 +2035,13 @@
             "type": "u16"
           },
           {
+            "name": "mcap_bucket_gap_bps",
+            "docs": [
+              "Max allowed gap between mcap buckets in bps (e.g. 11000 = 10% gap per bucket). Used for mcap_to_bucket formula."
+            ],
+            "type": "u16"
+          },
+          {
             "name": "graduate_tokens",
             "docs": [
               "When true, allow migrate when real_token_reserves == 0 (off-chain service creates PumpSwap pool)."
@@ -2161,6 +2176,20 @@
               "Token B market cap (lamports) at duel join; used for progress 0% baseline."
             ],
             "type": "u64"
+          },
+          {
+            "name": "token_a_mcap_at_end",
+            "docs": [
+              "Token A market cap (lamports) at duel resolution; set in resolve_duel."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "token_b_mcap_at_end",
+            "docs": [
+              "Token B market cap (lamports) at duel resolution; set in resolve_duel."
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -2284,6 +2313,14 @@
           },
           {
             "name": "target_mcap",
+            "type": "u64"
+          },
+          {
+            "name": "token_a_mcap_at_end",
+            "type": "u64"
+          },
+          {
+            "name": "token_b_mcap_at_end",
             "type": "u64"
           },
           {

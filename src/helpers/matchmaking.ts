@@ -1,50 +1,42 @@
 import { PublicKey } from "@solana/web3.js";
 import { blake3 } from "@noble/hashes/blake3.js";
-import { LAMPORTS_PER_SOL } from "../constants";
+import type { ConfigData } from "../types";
 
 /**
- * Market cap bucket ranges in SOL
- * Covers 30 SOL (launch) to ~800 SOL (bonding curve complete)
+ * Minimum duel-eligible mcap (lamports) from config: (initial_virtual_sol * total_supply) / initial_virtual_token_reserves.
  */
-const BUCKET_RANGES: Array<{ min: number; max: number }> = [
-    { min: 30, max: 40 },    // Bucket 0
-    { min: 40, max: 55 },    // Bucket 1
-    { min: 55, max: 75 },    // Bucket 2
-    { min: 75, max: 100 },   // Bucket 3
-    { min: 100, max: 130 },  // Bucket 4
-    { min: 130, max: 170 },  // Bucket 5
-    { min: 170, max: 220 },  // Bucket 6
-    { min: 220, max: 280 },  // Bucket 7
-    { min: 280, max: 350 },  // Bucket 8
-    { min: 350, max: 450 },  // Bucket 9
-    { min: 450, max: 600 },  // Bucket 10
-    { min: 600, max: 800 },  // Bucket 11
-];
+export function configMinMcapLamports(config: ConfigData): bigint {
+    const num = BigInt(config.initialVirtualSolReserves.toString()) * BigInt(config.totalSupply.toString());
+    const denom = BigInt(config.initialVirtualTokenReserves.toString());
+    if (denom === 0n) return 0n;
+    return num / denom;
+}
 
 /**
- * Convert market cap (in lamports) to bucket (0-11)
- * Returns null if market cap is outside duel-eligible range
+ * Convert market cap (lamports) to bucket index using config-driven formula.
+ * Bands: [l_min, l_min*r), [l_min*r, l_min*r²), ... with r = mcapBucketGapBps/10000 (e.g. 11000 = 10% gap).
+ * Returns null if mcap < minimum duel-eligible mcap (from config).
  */
-export function mcapToBucket(mcapLamports: bigint | number): number | null {
+export function mcapToBucket(mcapLamports: bigint | number, config: ConfigData): number | null {
     const mcap = typeof mcapLamports === "bigint" ? mcapLamports : BigInt(mcapLamports);
-    const SOL = BigInt(LAMPORTS_PER_SOL);
-    console.log('Mcap to bucket SOL:', mcap);
+    const lMin = configMinMcapLamports(config);
+    if (mcap < lMin) return null;
 
-    for (let i = 0; i < BUCKET_RANGES.length; i++) {
-        const { min, max } = BUCKET_RANGES[i];
-        const minLamports = BigInt(min) * SOL;
-        const maxLamports = BigInt(max) * SOL;
+    const rBps = BigInt(config.mcapBucketGapBps ?? 11000);
+    if (rBps === 0n) return null;
 
-        // First bucket is inclusive on both ends
-        // Other buckets are exclusive on min, inclusive on max
-        if (i === 0) {
-            if (mcap >= minLamports && mcap <= maxLamports) return i;
+    let bound = lMin;
+    let i = 0;
+    while (mcap >= bound) {
+        const next = (bound * rBps) / 10000n;
+        if (next > bound && next <= Number.MAX_SAFE_INTEGER) {
+            bound = next;
         } else {
-            if (mcap > minLamports && mcap <= maxLamports) return i;
+            break;
         }
+        i += 1;
     }
-
-    return null;
+    return Math.max(0, i - 1);
 }
 
 /**
@@ -90,21 +82,19 @@ export function deriveMatchKey(
 }
 
 /**
- * Get the bucket range in SOL for a given bucket
+ * Bucket range is no longer fixed; use config-driven formula. Returns null.
+ * @deprecated Use mcapToBucket(mcap, config) for bucket index; range is [l_min*r^i, l_min*r^(i+1)) with l_min and r from config.
  */
-export function getBucketRange(bucket: number): { min: number; max: number } | null {
-    if (bucket < 0 || bucket >= BUCKET_RANGES.length) {
-        return null;
-    }
-    return BUCKET_RANGES[bucket];
+export function getBucketRange(_bucket: number): { min: number; max: number } | null {
+    return null;
 }
 
 /**
- * Check if a token is eligible for matchmaking
- * Simplified check - actual eligibility also depends on on-chain state
+ * Check if a token is eligible for matchmaking (mcap >= min from config and bucket exists).
+ * Actual eligibility also depends on on-chain state.
  */
-export function isEligibleMcap(mcapLamports: bigint | number): boolean {
-    return mcapToBucket(mcapLamports) !== null;
+export function isEligibleMcap(mcapLamports: bigint | number, config: ConfigData): boolean {
+    return mcapToBucket(mcapLamports, config) !== null;
 }
 
 

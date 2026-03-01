@@ -19,6 +19,8 @@ export class DuelAccount implements DuelData {
     public loserSolSnapshot: BN;
     public tokenAMcapAtStart: BN;
     public tokenBMcapAtStart: BN;
+    public tokenAMcapAtEnd: BN;
+    public tokenBMcapAtEnd: BN;
 
     constructor(data: DuelData) {
         this.address = data.address;
@@ -38,6 +40,10 @@ export class DuelAccount implements DuelData {
             ? new BN(raw.tokenAMcapAtStart ?? raw.token_a_mcap_at_start) : new BN(0);
         this.tokenBMcapAtStart = raw?.tokenBMcapAtStart != null || raw?.token_b_mcap_at_start != null
             ? new BN(raw.tokenBMcapAtStart ?? raw.token_b_mcap_at_start) : new BN(0);
+        this.tokenAMcapAtEnd = raw?.tokenAMcapAtEnd != null || raw?.token_a_mcap_at_end != null
+            ? new BN(raw.tokenAMcapAtEnd ?? raw.token_a_mcap_at_end) : new BN(0);
+        this.tokenBMcapAtEnd = raw?.tokenBMcapAtEnd != null || raw?.token_b_mcap_at_end != null
+            ? new BN(raw.tokenBMcapAtEnd ?? raw.token_b_mcap_at_end) : new BN(0);
     }
 
     /**

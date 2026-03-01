@@ -13,6 +13,8 @@ export class ConfigAccount implements ConfigData {
     public creatorFeeBps: number;
     /** Target mcap growth in bps (e.g. 11000 = 110%) */
     public targetMcapGrowthBps: number;
+    /** Max allowed gap between mcap buckets in bps (e.g. 11000 = 10% gap per bucket) */
+    public mcapBucketGapBps: number;
     public graduateTokens: boolean;
     public graduationFeeLamports: BN;
     public initialVirtualSolReserves: BN;
@@ -33,6 +35,7 @@ export class ConfigAccount implements ConfigData {
         this.protocolFeeBps = data.protocolFeeBps;
         this.creatorFeeBps = data.creatorFeeBps;
         this.targetMcapGrowthBps = data.targetMcapGrowthBps;
+        this.mcapBucketGapBps = (data as any).mcapBucketGapBps ?? (data as any).mcap_bucket_gap_bps ?? 11000;
         this.graduateTokens = data.graduateTokens;
         this.graduationFeeLamports = data.graduationFeeLamports;
         this.initialVirtualSolReserves = data.initialVirtualSolReserves;
@@ -67,6 +70,7 @@ export class ConfigAccount implements ConfigData {
             u16("protocolFeeBps"),
             u16("creatorFeeBps"),
             u16("targetMcapGrowthBps"),
+            u16("mcapBucketGapBps"),
             u8("graduateTokens"), // bool as u8
             u64("graduationFeeLamports"),
             u64("initialVirtualSolReserves"),
@@ -89,6 +93,7 @@ export class ConfigAccount implements ConfigData {
             protocolFeeBps: value.protocolFeeBps,
             creatorFeeBps: value.creatorFeeBps,
             targetMcapGrowthBps: value.targetMcapGrowthBps,
+            mcapBucketGapBps: value.mcapBucketGapBps ?? 11000,
             graduateTokens: Boolean(value.graduateTokens),
             graduationFeeLamports: new BN(value.graduationFeeLamports.toString()),
             initialVirtualSolReserves: new BN(value.initialVirtualSolReserves.toString()),

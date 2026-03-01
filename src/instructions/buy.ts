@@ -124,7 +124,7 @@ export async function buy(
         });
     }
 
-    const bucket = mcapToBucket(BigInt(postTradeMcap.toString())) ?? 0;
+    const bucket = mcapToBucket(BigInt(postTradeMcap.toString()), configAccount as any) ?? 0;
 
     // Calculate window and duel PDA using config values
     const slot = await connection.getSlot(commitment);
@@ -316,7 +316,7 @@ export async function getBuyInstruction(
         });
     }
 
-    const bucket = mcapToBucket(BigInt(postTradeMcap.toString())) ?? 0;
+    const bucket = mcapToBucket(BigInt(postTradeMcap.toString()), configAccount as any) ?? 0;
     const slot = await connection.getSlot(commitment);
     const windowSize = Number(configAccount.windowSizeSlots.toString());
     const matchKeySpace = configAccount.matchKeySpace;

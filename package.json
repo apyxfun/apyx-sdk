@@ -1,6 +1,6 @@
 {
     "name": "@apyxfun/sdk",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "TypeScript SDK for interacting with the Apyx on-chain program",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",

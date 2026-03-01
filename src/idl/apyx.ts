@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/apyx.json`.
  */
 export type Apyx = {
-  "address": "APYzSaPqLXC9HJeMLwbMpgbFN5VJD8iLyZjSAZdvcZGM",
+  "address": "APXHXop7g5xqYc72LuchFFcnGQaPMpZCfmjSMH6YxC27",
   "metadata": {
     "name": "apyx",
     "version": "0.1.0",
@@ -695,6 +695,10 @@ export type Apyx = {
           "type": "u16"
         },
         {
+          "name": "mcapBucketGapBps",
+          "type": "u16"
+        },
+        {
           "name": "graduateTokens",
           "type": "bool"
         },
@@ -813,6 +817,10 @@ export type Apyx = {
         },
         {
           "name": "targetMcapGrowthBps",
+          "type": "u16"
+        },
+        {
+          "name": "mcapBucketGapBps",
           "type": "u16"
         },
         {
@@ -2033,6 +2041,13 @@ export type Apyx = {
             "type": "u16"
           },
           {
+            "name": "mcapBucketGapBps",
+            "docs": [
+              "Max allowed gap between mcap buckets in bps (e.g. 11000 = 10% gap per bucket). Used for mcap_to_bucket formula."
+            ],
+            "type": "u16"
+          },
+          {
             "name": "graduateTokens",
             "docs": [
               "When true, allow migrate when real_token_reserves == 0 (off-chain service creates PumpSwap pool)."
@@ -2167,6 +2182,20 @@ export type Apyx = {
               "Token B market cap (lamports) at duel join; used for progress 0% baseline."
             ],
             "type": "u64"
+          },
+          {
+            "name": "tokenAMcapAtEnd",
+            "docs": [
+              "Token A market cap (lamports) at duel resolution; set in resolve_duel."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "tokenBMcapAtEnd",
+            "docs": [
+              "Token B market cap (lamports) at duel resolution; set in resolve_duel."
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -2290,6 +2319,14 @@ export type Apyx = {
           },
           {
             "name": "targetMcap",
+            "type": "u64"
+          },
+          {
+            "name": "tokenAMcapAtEnd",
+            "type": "u64"
+          },
+          {
+            "name": "tokenBMcapAtEnd",
             "type": "u64"
           },
           {
